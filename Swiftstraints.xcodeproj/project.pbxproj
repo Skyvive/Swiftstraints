@@ -10,6 +10,10 @@
 		A2611A761B01B2980032CB53 /* Swiftstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = A2611A751B01B2980032CB53 /* Swiftstraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A2611A7C1B01B2980032CB53 /* Swiftstraints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2611A701B01B2980032CB53 /* Swiftstraints.framework */; };
 		A2611A831B01B2980032CB53 /* SwiftstraintsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A821B01B2980032CB53 /* SwiftstraintsTests.swift */; };
+		A2611A8D1B01B2BA0032CB53 /* Swiftstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A8C1B01B2BA0032CB53 /* Swiftstraints.swift */; };
+		A2611A901B0250E80032CB53 /* LayoutConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A8F1B0250E80032CB53 /* LayoutConstraints.swift */; };
+		A2611A921B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A911B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift */; };
+		A2611A961B0251C80032CB53 /* UIView+Implementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A951B0251C80032CB53 /* UIView+Implementation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +33,10 @@
 		A2611A7B1B01B2980032CB53 /* SwiftstraintsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftstraintsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2611A811B01B2980032CB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2611A821B01B2980032CB53 /* SwiftstraintsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftstraintsTests.swift; sourceTree = "<group>"; };
+		A2611A8C1B01B2BA0032CB53 /* Swiftstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swiftstraints.swift; sourceTree = "<group>"; };
+		A2611A8F1B0250E80032CB53 /* LayoutConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstraints.swift; sourceTree = "<group>"; };
+		A2611A911B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Implementation.swift"; sourceTree = "<group>"; };
+		A2611A951B0251C80032CB53 /* UIView+Implementation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Implementation.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				A2611A751B01B2980032CB53 /* Swiftstraints.h */,
+				A2611A8C1B01B2BA0032CB53 /* Swiftstraints.swift */,
+				A2611A8E1B0250BE0032CB53 /* Implementation */,
 				A2611A731B01B2980032CB53 /* Supporting Files */,
 			);
 			path = Swiftstraints;
@@ -100,6 +110,16 @@
 				A2611A811B01B2980032CB53 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A2611A8E1B0250BE0032CB53 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				A2611A8F1B0250E80032CB53 /* LayoutConstraints.swift */,
+				A2611A911B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift */,
+				A2611A951B0251C80032CB53 /* UIView+Implementation.swift */,
+			);
+			path = Implementation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +229,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2611A961B0251C80032CB53 /* UIView+Implementation.swift in Sources */,
+				A2611A901B0250E80032CB53 /* LayoutConstraints.swift in Sources */,
+				A2611A8D1B01B2BA0032CB53 /* Swiftstraints.swift in Sources */,
+				A2611A921B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +347,7 @@
 		A2611A871B01B2980032CB53 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -332,12 +357,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		A2611A881B01B2980032CB53 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
