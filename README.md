@@ -22,7 +22,7 @@ Or transform your less than consise visual format language code:
 ```
 Into the following:
 ``` swift
-let constraints = H[leftView]-10-[rightView]
+let constraints = H|[leftView]-10-[rightView]|
 ```
 That was easy!
 
