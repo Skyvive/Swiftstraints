@@ -35,3 +35,11 @@ pod 'Swiftstraints'
 ```
 
 Alternatively, you can clone this repo or download it as a zip and include the classes in your project.
+
+## Author
+
+Brad Hilton, brad.hilton.nw@gmail.com
+
+## License
+
+Swiftstraints is available under the MIT license. See the LICENSE file for more info.
