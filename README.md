@@ -26,12 +26,12 @@ let constraints = H|[leftView]-10-[rightView]|
 ```
 That was easy!
 
-<!--## Installation-->
+## Installation
 
-<!--Swiftstraints is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:-->
+Swiftstraints is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 
-<!--```ruby-->
-<!--pod 'Swiftstraints'-->
-<!--```-->
+```ruby
+pod 'Swiftstraints'
+```
 
-<!--Alternatively, you can clone this repo or download it as a zip and include the classes in your project.-->
+Alternatively, you can clone this repo or download it as a zip and include the classes in your project.
