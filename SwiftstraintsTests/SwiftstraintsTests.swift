@@ -18,8 +18,8 @@ class SwiftstraintsTests: XCTestCase {
         let rightView = UIView()
         superview.addSubview(leftView)
         superview.addSubview(rightView)
-        let constraint = leftView.width == rightView.width * 2.0 + 12
-        let constraints = H[leftView]-[rightView]
+        let constraint = leftView.width == rightView.width * 2.0 + 12 ^ 800
+        let constraints = H[leftView,==8^200]-[rightView]
         superview.addConstraints(H|-[leftView]-|)
     }
     

@@ -14,6 +14,7 @@
 		A2611A901B0250E80032CB53 /* LayoutConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A8F1B0250E80032CB53 /* LayoutConstraints.swift */; };
 		A2611A921B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A911B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift */; };
 		A2611A961B0251C80032CB53 /* UIView+Implementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A951B0251C80032CB53 /* UIView+Implementation.swift */; };
+		A2C4CA0E1B02865C00A4DC56 /* Swiftstraints.podspec in Resources */ = {isa = PBXBuildFile; fileRef = A2C4CA0D1B02865C00A4DC56 /* Swiftstraints.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		A2611A8F1B0250E80032CB53 /* LayoutConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstraints.swift; sourceTree = "<group>"; };
 		A2611A911B02511A0032CB53 /* NSLayoutConstraint+Implementation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Implementation.swift"; sourceTree = "<group>"; };
 		A2611A951B0251C80032CB53 /* UIView+Implementation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Implementation.swift"; sourceTree = "<group>"; };
+		A2C4CA0D1B02865C00A4DC56 /* Swiftstraints.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Swiftstraints.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 		A2611A661B01B2980032CB53 = {
 			isa = PBXGroup;
 			children = (
+				A2C4CA0D1B02865C00A4DC56 /* Swiftstraints.podspec */,
 				A2611A721B01B2980032CB53 /* Swiftstraints */,
 				A2611A7F1B01B2980032CB53 /* SwiftstraintsTests */,
 				A2611A711B01B2980032CB53 /* Products */,
@@ -212,6 +215,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2C4CA0E1B02865C00A4DC56 /* Swiftstraints.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +430,7 @@
 				A2611A881B01B2980032CB53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A2611A891B01B2980032CB53 /* Build configuration list for PBXNativeTarget "SwiftstraintsTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +439,7 @@
 				A2611A8B1B01B2980032CB53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
