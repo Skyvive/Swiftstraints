@@ -10,10 +10,21 @@ let constraint = NSLayoutConstraint(item: blueView,
                                 constant: 0.0)
 ```
 Into one just one line of code:
-
 ```swift
 let constraint = blueView.width == redView.width
 ```
+Or transform your less than consise visual format language code:
+```swift
+        let constraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[leftView]-10-[rightView]|",
+                               options: NSLayoutFormatOptions(0),
+                               metrics: nil,
+                               views: ["leftView":leftView, "rightView":rightView])
+```
+Into the following:
+``` swift
+let constraints = H[leftView]-10-[rightView]
+```
+That was easy!
 
 <!--## Installation-->
 
