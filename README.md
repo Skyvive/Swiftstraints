@@ -95,26 +95,25 @@ With Swiftstraints you can specify the same constraints in one line of code:
 ```swift
 let constraints = H|[leftView]-10-[rightView]|
 ```
-Swiftstraints adheres closely to the Visual Format Language, with a few exceptions. For one, you must specify must begin a constraint with H or V (as opposed to H: or V: and H is not optional).
+Swiftstraints adheres closely to the Visual Format Language, with a few exceptions:
 ```swift
+// Specifying the orientation is always required, even for horizontal layouts. 
+// The colons ':' are ommitted.
 let horizontalConstraints = H[leftView]-[rightView] // "H:[leftView]-[rightView]"
 let verticalConstraints = V[topView]-[bottomView] // "V:[leftView]-[rightView]"
-```
-To add predicate requirements ommit the parentheses and seperate with commas:
-```swift
-let constraints = H[leftView,>=rightView,<=100]-[rightView] // "H:[leftView(>=rightView,<=100)]-[rightView]"
-```
-To specify priority, replace the '@' marker with '^':
-```swift
-let constraints = H|-<=20^300-[leftView]-| // "H:|-(<=20@300)-[leftView]-|"
-```
-To have two views sit adjacent to each other requires the '~' marker:
-```swift
-let constraints = H[leftView]~[rightView] // "H:[leftView][rightView]"
+
+// Anywhere you would normally use parentheses, you use brackets instead.
+let constraints = H[leftView[>=80,<=100]]-[rightView] // "H:[leftView(>=80,<=100)]-[rightView]"
+
+// Use '^' instead of '@' to specify priority.
+let constraints = H|-<=20^300-[leftView]-| // "H:|-<=20@300-[leftView]-|"
+
+// Lastly, to have two views sit adjacent to each other use the '~' marker.
+let constraints = H[leftView]~[rightView] // H:[leftView][rightView]
 ```
 With Swiftstraints adding multiple constraints simultaneously to a view is a breeze:
 ```swift
-superview.addConstraints(topView.top == superview.bottom, V|topView||bottomView|)
+superview.addConstraints(topView.top == superview.bottom, V|topView|-|bottomView|)
 ```
 
 ## Author
