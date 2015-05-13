@@ -19,7 +19,7 @@ class SwiftstraintsTests: XCTestCase {
         superview.addSubview(leftView)
         superview.addSubview(rightView)
         let constraint = leftView.width == rightView.width * 2.0 + 12 ^ 800
-        let constraints = H|-[leftView[<=rightView]]-[>=100,<=200^300]-[rightView]-|
+        let constraints = H|-[leftView[<=rightView]]-<=200^300-[rightView]-|
         superview.addConstraints(leftView.width == rightView.width, V|-[leftView]-|)
     }
     
