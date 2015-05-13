@@ -10,12 +10,21 @@ import Foundation
 
 let numberLetterMappting = ["0":"A", "1":"B", "2":"C", "3":"D", "4":"E", "5":"F", "6":"G", "7":"H", "8":"I", "9":"J"]
 
+extension UIView {
+    
+    public subscript(args: AnyObject...) -> LayoutConstraints {
+        return LayoutConstraints(args: self, args)
+    }
+    
+}
+
 public class LayoutConstraints: NSArray {
     
     var format = ""
     var views = [NSString : UIView]()
+    var layoutOptions = NSLayoutFormatOptions(0)
     var array: [AnyObject] {
-        return NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(0), metrics: nil, views: views)
+        return NSLayoutConstraint.constraintsWithVisualFormat(format, options: layoutOptions, metrics: nil, views: views)
     }
     
     convenience init(args: Any...) {
@@ -31,23 +40,34 @@ public class LayoutConstraints: NSArray {
     }
     
     func appendArray(array: NSArray) {
-        format += "["
+        format += arrayIsView(array) ? "[" : "("
         for (index, object) in enumerate(array) {
-            format += index == 1 ? "(" : ""
-            format += index > 1 ? "," : ""
+            format += index > 0 ? "," : ""
             appendObject(object)
         }
-        format += array.count > 1 ? ")]" : "]"
+        format += arrayIsView(array) ? "]" : ")"
+    }
+    
+    func arrayIsView(array: NSArray) -> Bool {
+        if array.count > 0 {
+            if let view = array[0] as? UIView {
+                return true
+            } else if let constraints = array[0] as? LayoutConstraints where constraints.format.hasSuffix(")") {
+                return true
+            }
+        }
+        return false
     }
     
     func appendObject(object: Any) {
         switch object {
+        case let options as NSLayoutFormatOptions: layoutOptions = layoutOptions | options
         case let string as String: self.format += string
         case let double as Double: self.format += "\(double)"
         case let float as Float: self.format += "\(float)"
         case let int as Int: self.format += "\(int)"
         case let view as UIView: appendView(view)
-        case let builder as LayoutConstraints: appendBuilder(builder); break
+        case let builder as LayoutConstraints: appendConstraints(builder); break
         case let array as NSArray: appendArray(array)
         default: break
         }
@@ -67,9 +87,9 @@ public class LayoutConstraints: NSArray {
         return name
     }
     
-    func appendBuilder(builder: LayoutConstraints) {
-        format += builder.format
-        for (name, view) in builder.views {
+    func appendConstraints(constraints: LayoutConstraints) {
+        format += constraints.format
+        for (name, view) in constraints.views {
             views[name] = view
         }
     }
