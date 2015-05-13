@@ -102,7 +102,7 @@ Swiftstraints adheres closely to the Visual Format Language, with a few exceptio
 let horizontalConstraints = H[leftView]-[rightView] // "H:[leftView]-[rightView]"
 let verticalConstraints = V[topView]-[bottomView] // "V:[leftView]-[rightView]"
 
-// Anywhere you would normally use parentheses, you use brackets instead.
+// Anywhere you would normally use parentheses, use brackets instead.
 let constraints = H[leftView[>=80,<=100]]-[rightView] // "H:[leftView(>=80,<=100)]-[rightView]"
 
 // Use '^' instead of '@' to specify priority.
