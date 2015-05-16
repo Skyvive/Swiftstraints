@@ -118,7 +118,7 @@ superview.addConstraints(topView.top == superview.bottom, V|topView|-|bottomView
 
 ## Author
 
-Brad Hilton, brad.hilton.nw@gmail.com
+Brad Hilton, brad@skyvive.com
 
 ## License
 
