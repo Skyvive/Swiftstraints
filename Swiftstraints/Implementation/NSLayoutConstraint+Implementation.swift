@@ -144,7 +144,7 @@ extension NSLayoutConstraint {
             relatedBy: self.relation,
             toItem: nil,
             attribute: NSLayoutAttribute.NotAnAttribute,
-            multiplier: 0,
+            multiplier: self.multiplier,
             constant: self.constant,
             priority: self.priority)
     }
