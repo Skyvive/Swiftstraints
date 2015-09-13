@@ -32,8 +32,8 @@ extension UIView {
     public var centerXWithinMargins: NSLayoutConstraint { return layoutConstraint(NSLayoutAttribute.CenterXWithinMargins) }
     public var centerYWithinMargins: NSLayoutConstraint { return layoutConstraint(NSLayoutAttribute.CenterYWithinMargins) }
     
-    public func addConstraints(constraints: AnyObject...) {
-        self.addLayoutConstraints(constraints)
+    public func addConstraints(constraints: NSLayoutConstraint...) {
+        self.addConstraints(constraints)
     }
     
 }

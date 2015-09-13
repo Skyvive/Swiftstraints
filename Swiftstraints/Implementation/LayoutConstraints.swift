@@ -21,8 +21,8 @@ extension UIView {
 public class LayoutConstraints: NSArray {
     
     var format = ""
-    var views = [NSString : UIView]()
-    var layoutOptions = NSLayoutFormatOptions(0)
+    var views = [String : UIView]()
+    var layoutOptions = NSLayoutFormatOptions(rawValue: 0)
     var array: [AnyObject] {
         return NSLayoutConstraint.constraintsWithVisualFormat(format, options: layoutOptions, metrics: nil, views: views)
     }
@@ -41,7 +41,7 @@ public class LayoutConstraints: NSArray {
     
     func appendArray(array: NSArray) {
         format += arrayIsView(array) ? "[" : "("
-        for (index, object) in enumerate(array) {
+        for (index, object) in array.enumerate() {
             format += index > 0 ? "," : ""
             appendObject(object)
         }
@@ -50,7 +50,7 @@ public class LayoutConstraints: NSArray {
     
     func arrayIsView(array: NSArray) -> Bool {
         if array.count > 0 {
-            if let view = array[0] as? UIView {
+            if array[0] is UIView {
                 return true
             } else if let constraints = array[0] as? LayoutConstraints where constraints.format.hasSuffix(")") {
                 return true
@@ -61,7 +61,7 @@ public class LayoutConstraints: NSArray {
     
     func appendObject(object: Any) {
         switch object {
-        case let options as NSLayoutFormatOptions: layoutOptions = layoutOptions | options
+        case let options as NSLayoutFormatOptions: layoutOptions = layoutOptions.union(options)
         case let string as String: self.format += string
         case let double as Double: self.format += "\(double)"
         case let float as Float: self.format += "\(float)"
@@ -79,8 +79,8 @@ public class LayoutConstraints: NSArray {
         views[name] = view
     }
     
-    func nameForView(object: NSObject) -> NSString {
-        var name = NSString(format: "%p", object)
+    func nameForView(object: NSObject) -> String {
+        var name = NSString(format: "%p", object) as String
         for (number, letter) in numberLetterMappting {
             name = name.stringByReplacingOccurrencesOfString(number, withString: letter)
         }
@@ -102,7 +102,7 @@ public class LayoutConstraints: NSArray {
         super.init()
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init()
     }
     

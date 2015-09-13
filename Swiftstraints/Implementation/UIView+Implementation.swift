@@ -28,12 +28,12 @@ extension UIView {
                 self.addConstraint(constraint)
             } else if let layoutConstraints = object as? NSArray {
                 if layoutConstraints.count > 0 {
-                    if let array = layoutConstraints[0] as? [AnyObject] {
+                    if let array = layoutConstraints[0] as? [NSLayoutConstraint] {
                         self.addConstraints(array)
                     }
                 }
             }
         }
     }
-    
+
 }

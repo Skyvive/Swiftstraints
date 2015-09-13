@@ -8,36 +8,36 @@
 
 import Foundation
 
-public func +(left: NSLayoutConstraint, right: Float) -> NSLayoutConstraint {
-    return constraint(left, setConstant: left.constant + CGFloat(right))
+public func +(left: NSLayoutConstraint, right: CGFloat) -> NSLayoutConstraint {
+    return constraint(left, setConstant: left.constant + right)
 }
 
-public func +(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return constraint(right, setConstant: CGFloat(left) + right.constant)
+public func +(left: CGFloat, right: NSLayoutConstraint) -> NSLayoutConstraint {
+    return constraint(right, setConstant: left + right.constant)
 }
 
-public func -(left: NSLayoutConstraint, right: Float) -> NSLayoutConstraint {
-    return constraint(left, setConstant: left.constant - CGFloat(right))
+public func -(left: NSLayoutConstraint, right: CGFloat) -> NSLayoutConstraint {
+    return constraint(left, setConstant: left.constant - right)
 }
 
-public func -(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return constraint(right, setConstant: CGFloat(left) - right.constant)
+public func -(left: CGFloat, right: NSLayoutConstraint) -> NSLayoutConstraint {
+    return constraint(right, setConstant: left - right.constant)
 }
 
-public func *(left: NSLayoutConstraint, right: Float) -> NSLayoutConstraint {
-    return constraint(left, setMultiplier: left.multiplier * CGFloat(right))
+public func *(left: NSLayoutConstraint, right: CGFloat) -> NSLayoutConstraint {
+    return constraint(left, setMultiplier: left.multiplier * right)
 }
 
-public func *(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return constraint(right, setMultiplier: CGFloat(left) * right.multiplier)
+public func *(left: CGFloat, right: NSLayoutConstraint) -> NSLayoutConstraint {
+    return constraint(right, setMultiplier: left * right.multiplier)
 }
 
-public func /(left: NSLayoutConstraint, right: Float) -> NSLayoutConstraint {
-    return constraint(left, setMultiplier: left.multiplier / CGFloat(right))
+public func /(left: NSLayoutConstraint, right: CGFloat) -> NSLayoutConstraint {
+    return constraint(left, setMultiplier: left.multiplier / right)
 }
 
-public func /(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return constraint(right, setMultiplier: CGFloat(left)/right.multiplier)
+public func /(left: CGFloat, right: NSLayoutConstraint) -> NSLayoutConstraint {
+    return constraint(right, setMultiplier: left/right.multiplier)
 }
 
 public func ^ (left: NSLayoutConstraint, right: UILayoutPriority) -> NSLayoutConstraint {
@@ -45,40 +45,40 @@ public func ^ (left: NSLayoutConstraint, right: UILayoutPriority) -> NSLayoutCon
     return left
 }
 
-public func ==(left: NSLayoutConstraint, right: Float) -> NSLayoutConstraint {
-    return constraint(left, setConstant: CGFloat(right) - left.constant).relation(NSLayoutRelation.Equal).nilSecondItem()
+public func ==(left: NSLayoutConstraint, right: CGFloat) -> NSLayoutConstraint {
+    return constraint(left, setConstant: right - left.constant).relation(NSLayoutRelation.Equal).nilSecondItem()
 }
 
-public func <=(left: NSLayoutConstraint, right: Float) -> NSLayoutConstraint {
-    return constraint(left, setConstant: CGFloat(right) - left.constant).relation(NSLayoutRelation.LessThanOrEqual).nilSecondItem()
+public func <=(left: NSLayoutConstraint, right: CGFloat) -> NSLayoutConstraint {
+    return constraint(left, setConstant: right - left.constant).relation(NSLayoutRelation.LessThanOrEqual).nilSecondItem()
 }
 
-public func >=(left: NSLayoutConstraint, right: Float) -> NSLayoutConstraint {
-    return constraint(left, setConstant: CGFloat(right) - left.constant).relation(NSLayoutRelation.GreaterThanOrEqual).nilSecondItem()
+public func >=(left: NSLayoutConstraint, right: CGFloat) -> NSLayoutConstraint {
+    return constraint(left, setConstant: right - left.constant).relation(NSLayoutRelation.GreaterThanOrEqual).nilSecondItem()
 }
 
-public func ==(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return constraint(right, setConstant: right.constant - CGFloat(left)).relation(NSLayoutRelation.Equal).nilSecondItem()
+public func ==(left: CGFloat, right: NSLayoutConstraint) -> NSLayoutConstraint {
+    return constraint(right, setConstant: right.constant - left).relation(NSLayoutRelation.Equal).nilSecondItem()
 }
 
-public func <=(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return constraint(right, setConstant: right.constant - CGFloat(left)).relation(NSLayoutRelation.GreaterThanOrEqual).nilSecondItem()
+public func <=(left: CGFloat, right: NSLayoutConstraint) -> NSLayoutConstraint {
+    return constraint(right, setConstant: right.constant - left).relation(NSLayoutRelation.GreaterThanOrEqual).nilSecondItem()
 }
 
-public func >=(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return constraint(right, setConstant: right.constant - CGFloat(left)).relation(NSLayoutRelation.LessThanOrEqual).nilSecondItem()
+public func >=(left: CGFloat, right: NSLayoutConstraint) -> NSLayoutConstraint {
+    return constraint(right, setConstant: right.constant - left).relation(NSLayoutRelation.LessThanOrEqual).nilSecondItem()
 }
 
 public func ==(left: NSLayoutConstraint, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return mergeConstraints(left, right).relation(NSLayoutRelation.Equal)
+    return mergeConstraints(left, right: right).relation(NSLayoutRelation.Equal)
 }
 
 public func <=(left: NSLayoutConstraint, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return mergeConstraints(left, right).relation(NSLayoutRelation.LessThanOrEqual)
+    return mergeConstraints(left, right: right).relation(NSLayoutRelation.LessThanOrEqual)
 }
 
 public func >=(left: NSLayoutConstraint, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return mergeConstraints(left, right).relation(NSLayoutRelation.GreaterThanOrEqual)
+    return mergeConstraints(left, right: right).relation(NSLayoutRelation.GreaterThanOrEqual)
 }
 
 func constraint(constraint: NSLayoutConstraint, setConstant constant: CGFloat) -> NSLayoutConstraint {
