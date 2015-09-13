@@ -22,18 +22,8 @@ extension UIView {
             constant: 0)
     }
     
-    func addLayoutConstraints(constraints: AnyObject...) {
-        for object in constraints {
-            if let constraint = object as? NSLayoutConstraint {
-                self.addConstraint(constraint)
-            } else if let layoutConstraints = object as? NSArray {
-                if layoutConstraints.count > 0 {
-                    if let array = layoutConstraints[0] as? [AnyObject] {
-                        self.addConstraints(array)
-                    }
-                }
-            }
-        }
+    func addLayoutConstraints(constraints: NSLayoutConstraint...) {
+        addConstraints(constraints)
     }
     
 }
