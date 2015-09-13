@@ -70,15 +70,15 @@ public func >=(left: Float, right: NSLayoutConstraint) -> NSLayoutConstraint {
 }
 
 public func ==(left: NSLayoutConstraint, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return mergeConstraints(left, right).relation(NSLayoutRelation.Equal)
+    return mergeConstraints(left, right: right).relation(NSLayoutRelation.Equal)
 }
 
 public func <=(left: NSLayoutConstraint, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return mergeConstraints(left, right).relation(NSLayoutRelation.LessThanOrEqual)
+    return mergeConstraints(left, right: right).relation(NSLayoutRelation.LessThanOrEqual)
 }
 
 public func >=(left: NSLayoutConstraint, right: NSLayoutConstraint) -> NSLayoutConstraint {
-    return mergeConstraints(left, right).relation(NSLayoutRelation.GreaterThanOrEqual)
+    return mergeConstraints(left, right: right).relation(NSLayoutRelation.GreaterThanOrEqual)
 }
 
 func constraint(constraint: NSLayoutConstraint, setConstant constant: CGFloat) -> NSLayoutConstraint {
