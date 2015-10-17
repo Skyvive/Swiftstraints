@@ -1,6 +1,6 @@
 # Swiftstraints
 
-Swiftstraints can turn verbose auto-layout code:
+`Swiftstraints` can turn verbose auto-layout code:
 ```swift
 let constraint = NSLayoutConstraint(item: blueView,
                                attribute: NSLayoutAttribute.Width,
@@ -23,62 +23,63 @@ let constraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[leftView]-
 ```
 Into the following:
 ``` swift
-let constraints = NSLayoutConstraints("H:|[\(leftView)]-10-[\(rightView)]|)
+let constraints = NSLayoutConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 ```
 That was easy!
 
 ## Installation
 
-Swiftstraints is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
+`Swiftstraints` is available through [CocoaPods](http://cocoapods.org). To install, simply include the following lines in your podfile:
 ```ruby
+use_frameworks!
 pod 'Swiftstraints'
 ```
-Alternatively, you can clone this repo or download it as a zip and include the classes in your project.
+Be sure to import the module at the top of your .swift files:
+```swift
+import Swiftstraints
+```
+Alternatively, clone this repo or download it as a zip and include the classes in your project.
 
 ## Constraints
 
-With Swiftstraints you can create constraints that look just Apple's generic constraint definition:
+With `Swiftstraints` you can create constraints that look just Apple's generic constraint definition:
 ```swift
 item1.attribute1 = multiplier × item2.attribute2 + constant
 ```
-Swifstraints extends UIView to offer layout attributes as properties:
+`Swifstraints` utilizes the new layout anchors introduced in iOS 9:
 ```swift
 let view = UIView()
-view.width
-view.height
-view.trailing
-view.centerX
+view.widthAnchor
+view.heightAnchor
+view.trailingAnchor
+view.centerXAnchor
 etc...
 ```
-Swiftstraints also extends a few common operators so that you can easily create custom constraints:
+`Swiftstraints` implements operator overloading so that you can easily create custom constraints:
 ```swift
 let blueView = UIView()
 let redView = UIView()
-let constraint = blueView.height == redView.height
+let constraint = blueView.heightAnchor == redView.heightAnchor
 ```
 Just as you would expect, you can specify a multiplier:
 ```swift
-let constraint = blueView.height == 2.0 * redView.height
+let constraint = blueView.heightAnchor == 2.0 * redView.heightAnchor
 ```
 Or add a constant:
 ```swift
-let constraint = blueView.height == redView.height + 10.0
+let constraint = blueView.heightAnchor == redView.heightAnchor + 10.0
 ```
 You can specify inequalities:
 ```swift
-let constraint = blueView.height <= redView.height
+let constraint = blueView.heightAnchor <= redView.heightAnchor
 ```
 And you can define constant constraints if you so choose:
 ```swift
-let constraint = blueView.height == 100.0
-```
-You can also set a custom priority level for your constraint with the '^' marker:
-```swift
-let constraint = blueView.height == 1.2 * redView.height + 12.0 ^ 300
+let constraint = blueView.heightAnchor == 100.0
 ```
 Swiftstraints can readily compute relatively complex constraints:
 ```swift
-let constraint = blueView.height * 1.4 - 5.0 >= redView.height / 3.0 + 400 ^ 800
+let constraint = blueView.heightAnchor * 1.4 - 5.0 >= redView.heightAnchor / 3.0 + 400
 ```
 It's really easy.
 
@@ -91,30 +92,19 @@ let constraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[leftView]-
                                metrics: nil,
                                views: ["leftView":leftView, "rightView":rightView])
 ```
-With Swiftstraints you can specify the same constraints in one line of code:
+`Swiftstraints` uses string interpolation to let you specify the same constraints in one line of code:
 ```swift
-let constraints = H|[leftView]-10-[rightView]|
+let constraints = NSLayoutConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 ```
-Swiftstraints adheres closely to the Visual Format Language, with a few exceptions:
+It also extends `UIView` so that you can add constraints easily using the interpolated string format:
 ```swift
-// Specifying the orientation is always required, even for horizontal layouts. 
-// The colons ':' are ommitted.
-let horizontalConstraints = H[leftView]-[rightView] // "H:[leftView]-[rightView]"
-let verticalConstraints = V[topView]-[bottomView] // "V:[leftView]-[rightView]"
-
-// Anywhere you would normally use parentheses, use brackets instead.
-let constraints = H[leftView[>=80,<=100]]-[rightView] // "H:[leftView(>=80,<=100)]-[rightView]"
-
-// Use '^' instead of '@' to specify priority.
-let constraints = H|-<=20^300-[leftView]-| // "H:|-<=20@300-[leftView]-|"
-
-// Lastly, to have two views sit adjacent to each other use the '~' marker.
-let constraints = H[leftView]~[rightView] // H:[leftView][rightView]
+superview.addConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 ```
-With Swiftstraints adding multiple constraints simultaneously to a view is a breeze:
-```swift
-superview.addConstraints(topView.top == superview.bottom, V|topView|-|bottomView|)
-```
+## Revision History
+
+* 2.0.0 - Updated for Swift 2.0 and iOS 9. Now uses layout anchors for simple constraints and string interpolation for constraints created with the Visual Format Language.
+* 1.1.0 - Minor API tweaks
+* 1.0.0 - Inital Release
 
 ## Author
 
