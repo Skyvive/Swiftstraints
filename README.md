@@ -105,7 +105,7 @@ Super easy, super simple.
 
 * 2.0.0 - Updated for Swift 2.0 and iOS 9. Now uses layout anchors for simple constraints and string interpolation for Visual Format Language constraints.
 * 1.1.0 - Minor API tweaks
-* 1.0.0 - Inital Release
+* 1.0.0 - Initial Release
 
 ## Author
 
