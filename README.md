@@ -96,13 +96,14 @@ let constraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[leftView]-
 ```swift
 let constraints = NSLayoutConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 ```
-It also extends `UIView` so that you can add constraints easily using the interpolated string format:
+`Swiftstraints` also extends `UIView` so that you can add constraints easily using the interpolated string format:
 ```swift
 superview.addConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 ```
+Super easy, super simple.
 ## Revision History
 
-* 2.0.0 - Updated for Swift 2.0 and iOS 9. Now uses layout anchors for simple constraints and string interpolation for constraints created with the Visual Format Language.
+* 2.0.0 - Updated for Swift 2.0 and iOS 9. Now uses layout anchors for simple constraints and string interpolation for Visual Format Language constraints.
 * 1.1.0 - Minor API tweaks
 * 1.0.0 - Inital Release
 
