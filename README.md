@@ -103,6 +103,7 @@ superview.addConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 Super easy, super simple.
 ## Revision History
 
+* 2.0.1 - Updated to include support for axis anchors, increased test coverage and more documentation.
 * 2.0.0 - Updated for Swift 2.0 and iOS 9. Now uses layout anchors for simple constraints and string interpolation for Visual Format Language constraints.
 * 1.1.0 - Minor API tweaks
 * 1.0.0 - Initial Release
