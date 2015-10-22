@@ -22,17 +22,39 @@ func == (lh: NSLayoutConstraint, rh: NSLayoutConstraint) -> Bool {
 
 class SwiftstraintsTests: XCTestCase {
     
-    func testExpressions() {
+    func testAxisExpressions() {
+        let view = UIView()
+        XCTAssert(view.topAnchor.constant == 0)
+        XCTAssert((view.topAnchor + 10).constant == 10)
+        XCTAssert((10 + view.topAnchor).constant == 10)
+        XCTAssert((view.topAnchor - 10).constant == -10)
+    }
+    
+    func testAxisConstraints() {
+        let view1 = UIView()
+        let view2 = UIView()
+        XCTAssert((view1.topAnchor == view2.bottomAnchor) == view1.topAnchor.constraintEqualToAnchor(view2.bottomAnchor))
+        XCTAssert((view1.topAnchor == view2.bottomAnchor + 10) == view1.topAnchor.constraintEqualToAnchor(view2.bottomAnchor, constant: 10))
+        XCTAssert((view1.topAnchor + 10 == view2.bottomAnchor) == view1.topAnchor.constraintEqualToAnchor(view2.bottomAnchor, constant: -10))
+        XCTAssert((view1.topAnchor <= view2.bottomAnchor) == view1.topAnchor.constraintLessThanOrEqualToAnchor(view2.bottomAnchor))
+        XCTAssert((view1.topAnchor >= view2.bottomAnchor) == view1.topAnchor.constraintGreaterThanOrEqualToAnchor(view2.bottomAnchor))
+    }
+    
+    
+    func testDimensionExpressions() {
         let view = UIView()
         XCTAssert((view.widthAnchor + 10).constant == 10)
+        XCTAssert((10 + view.widthAnchor).constant == 10)
         XCTAssert((view.widthAnchor * 10).multiplier == 10)
+        XCTAssert((10 * view.widthAnchor).multiplier == 10)
         XCTAssert((view.widthAnchor - 10).constant == -10)
         XCTAssert((view.widthAnchor / 10).multiplier == (1/10))
+        XCTAssert((view.widthAnchor * 10 + 10).multiplier == 10)
         XCTAssert(((view.widthAnchor - 10)*10).constant == -100)
         XCTAssert(((view.widthAnchor + 10)/10).constant == 1)
     }
     
-    func testConstraints() {
+    func testDimensionConstraints() {
         let view = UIView()
         XCTAssert((view.widthAnchor == 10) == view.widthAnchor.constraintEqualToConstant(10))
         XCTAssert((view.widthAnchor == view.heightAnchor) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor))
