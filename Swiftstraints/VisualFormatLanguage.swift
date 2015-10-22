@@ -15,6 +15,7 @@ func + <Key, Value>(var lh: [Key : Value], rh: [Key : Value]) -> [Key : Value] {
     return lh
 }
 
+/// Represents constraints created from a interpolated string in the visual format language.
 public struct VisualFormatLanguage : StringInterpolationConvertible {
     
     let format: String
@@ -38,12 +39,12 @@ public struct VisualFormatLanguage : StringInterpolationConvertible {
         }
     }
     
-    /// Returns layout constraints with options
+    /// Returns layout constraints with options.
     public func constraints(options: NSLayoutFormatOptions) -> [NSLayoutConstraint] {
         return NSLayoutConstraint.constraintsWithVisualFormat(format, options: [], metrics: metrics, views: views)
     }
     
-    /// Returns layout constraints
+    /// Returns layout constraints.
     public var constraints: [NSLayoutConstraint] {
         return constraints([])
     }
@@ -54,8 +55,8 @@ public typealias NSLayoutConstraints = [NSLayoutConstraint]
 
 extension Array where Element : NSLayoutConstraint {
     
-    /// Create a list of constraints using a string interpolated with nested views and metrics
-    /// You can optionally include NSLayoutFormatOptions as the second parameter
+    /// Create a list of constraints using a string interpolated with nested views and metrics.
+    /// You can optionally include NSLayoutFormatOptions as the second parameter.
     public init(_ visualFormatLanguage: VisualFormatLanguage, options: NSLayoutFormatOptions = []) {
         if let constraints = visualFormatLanguage.constraints(options) as? [Element] {
             self = constraints

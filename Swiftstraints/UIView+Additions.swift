@@ -10,10 +10,12 @@ import UIKit
 
 extension UIView {
     
+    /// Extension to allow addition of multiple constraints in a variadic list.
     public func addConstraints(constraints: NSLayoutConstraint...) {
         addConstraints(constraints)
     }
     
+    /// Extension to allow adding of constraints via the visual format language. May also provide NSLayoutFormatOptions as a second parameter.
     public func addConstraints(visualFormatLanguage: VisualFormatLanguage, options: NSLayoutFormatOptions = []) {
         addConstraints(visualFormatLanguage.constraints(options))
     }
