@@ -8,11 +8,12 @@
 
 import Foundation
 
-func + <Key, Value>(var lh: [Key : Value], rh: [Key : Value]) -> [Key : Value] {
+func + <Key, Value>(lh: [Key : Value], rh: [Key : Value]) -> [Key : Value] {
+    var dictionary = lh
     for (key, value) in rh {
-        lh[key] = value
+        dictionary[key] = value
     }
-    return lh
+    return dictionary
 }
 
 /// Represents constraints created from a interpolated string in the visual format language.
