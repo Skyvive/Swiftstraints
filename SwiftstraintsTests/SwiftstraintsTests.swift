@@ -40,7 +40,6 @@ class SwiftstraintsTests: XCTestCase {
         XCTAssert((view1.topAnchor >= view2.bottomAnchor) == view1.topAnchor.constraintGreaterThanOrEqualToAnchor(view2.bottomAnchor))
     }
     
-    
     func testDimensionExpressions() {
         let view = UIView()
         XCTAssert((view.widthAnchor + 10).constant == 10)
@@ -66,6 +65,18 @@ class SwiftstraintsTests: XCTestCase {
         XCTAssert((view.widthAnchor*3 + 1 <= view.heightAnchor*6 + 7) == view.widthAnchor.constraintLessThanOrEqualToAnchor(view.heightAnchor, multiplier: 2, constant: 2))
         XCTAssert((view.widthAnchor*3 + 1 == view.heightAnchor*6 + 7) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor, multiplier: 2, constant: 2))
         XCTAssert((view.widthAnchor*3 + 1 >= view.heightAnchor*6 + 7) == view.widthAnchor.constraintGreaterThanOrEqualToAnchor(view.heightAnchor, multiplier: 2, constant: 2))
+    }
+    
+    func testPriority() {
+        let view = UIView()
+        XCTAssert((view.widthAnchor == view.heightAnchor | .Required).priority == UILayoutPriorityRequired)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .High).priority == UILayoutPriorityDefaultHigh)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .Low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .Other(0.18)).priority == 0.18)
+        XCTAssert((view.widthAnchor == view.heightAnchor + 10 | .Low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.widthAnchor == 10 | .Low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.topAnchor == view.bottomAnchor | .High).priority == UILayoutPriorityDefaultHigh)
+        XCTAssert((view.topAnchor == view.bottomAnchor + 10 | .Low).priority == UILayoutPriorityDefaultLow)
     }
     
     func testVisualFormatLanguage() {

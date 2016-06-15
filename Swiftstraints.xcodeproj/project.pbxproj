@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A20269B11D11DB8100E6088A /* LayoutPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20269B01D11DB8100E6088A /* LayoutPriority.swift */; };
+		A20269B31D11DEA900E6088A /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20269B21D11DEA900E6088A /* NSLayoutConstraint+Extensions.swift */; };
 		A2611A761B01B2980032CB53 /* Swiftstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = A2611A751B01B2980032CB53 /* Swiftstraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A2611A7C1B01B2980032CB53 /* Swiftstraints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2611A701B01B2980032CB53 /* Swiftstraints.framework */; };
 		A2611A831B01B2980032CB53 /* SwiftstraintsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2611A821B01B2980032CB53 /* SwiftstraintsTests.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A20269B01D11DB8100E6088A /* LayoutPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutPriority.swift; sourceTree = "<group>"; };
+		A20269B21D11DEA900E6088A /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		A2611A701B01B2980032CB53 /* Swiftstraints.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swiftstraints.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2611A741B01B2980032CB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2611A751B01B2980032CB53 /* Swiftstraints.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swiftstraints.h; sourceTree = "<group>"; };
@@ -83,8 +87,10 @@
 			isa = PBXGroup;
 			children = (
 				A2611A751B01B2980032CB53 /* Swiftstraints.h */,
+				A20269B01D11DB8100E6088A /* LayoutPriority.swift */,
 				A266B0861BD967E400821E14 /* AxisAnchor.swift */,
 				A266B0881BD9684800821E14 /* DimensionAnchor.swift */,
+				A20269B21D11DEA900E6088A /* NSLayoutConstraint+Extensions.swift */,
 				A2A827961BD1CC0700E45CAA /* VisualFormatLanguage.swift */,
 				A2A827991BD1CC2900E45CAA /* UIView+Additions.swift */,
 				A2611A731B01B2980032CB53 /* Supporting Files */,
@@ -227,8 +233,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A266B0891BD9684800821E14 /* DimensionAnchor.swift in Sources */,
+				A20269B31D11DEA900E6088A /* NSLayoutConstraint+Extensions.swift in Sources */,
 				A2A8279A1BD1CC2900E45CAA /* UIView+Additions.swift in Sources */,
 				A2A827981BD1CC0700E45CAA /* VisualFormatLanguage.swift in Sources */,
+				A20269B11D11DB8100E6088A /* LayoutPriority.swift in Sources */,
 				A266B0871BD967E400821E14 /* AxisAnchor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
