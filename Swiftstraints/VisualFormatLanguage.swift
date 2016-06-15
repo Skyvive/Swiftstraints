@@ -8,6 +8,14 @@
 
 import Foundation
 
+extension NSObject {
+    
+    var vflKey: String {
+        return "A\(UInt(bitPattern: unsafeAddressOf(self).hashValue))B"
+    }
+    
+}
+
 func + <Key, Value>(lh: [Key : Value], rh: [Key : Value]) -> [Key : Value] {
     var dictionary = lh
     for (key, value) in rh {
@@ -30,10 +38,10 @@ public struct VisualFormatLanguage : StringInterpolationConvertible {
     
     public init<T>(stringInterpolationSegment expr: T) {
         if let view = expr as? UIView {
-            format = "A\(unsafeAddressOf(view).hashValue)B"
+            format = view.vflKey
             views[format] = view
         } else if let number = expr as? NSNumber {
-            format = "A\(unsafeAddressOf(number).hashValue)B"
+            format = number.vflKey
             metrics[format] = number
         } else {
             format = "\(expr)"
@@ -42,7 +50,7 @@ public struct VisualFormatLanguage : StringInterpolationConvertible {
     
     /// Returns layout constraints with options.
     public func constraints(options: NSLayoutFormatOptions) -> [NSLayoutConstraint] {
-        return NSLayoutConstraint.constraintsWithVisualFormat(format, options: [], metrics: metrics, views: views)
+        return NSLayoutConstraint.constraintsWithVisualFormat(format, options: options, metrics: metrics, views: views)
     }
     
     /// Returns layout constraints.

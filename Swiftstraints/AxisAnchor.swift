@@ -8,7 +8,6 @@
 
 import Foundation
 
-/// Represents an axis anchor (i.e., NSLayoutXAxisAnchor or NSLayoutYAxisAnchor).
 public protocol AxisAnchor {
     var anchor: NSLayoutAnchor { get }
     var constant: CGFloat { get }

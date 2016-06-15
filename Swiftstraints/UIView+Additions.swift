@@ -16,8 +16,13 @@ extension UIView {
     }
     
     /// Extension to allow adding of constraints via the visual format language. May also provide NSLayoutFormatOptions as a second parameter.
-    public func addConstraints(visualFormatLanguage: VisualFormatLanguage, options: NSLayoutFormatOptions = []) {
-        addConstraints(visualFormatLanguage.constraints(options))
+    public func addConstraints(constraints: VisualFormatLanguage, options: NSLayoutFormatOptions = []) {
+        addConstraints(constraints.constraints(options))
+    }
+    
+    /// Extension to allow adding of constraints via the visual format language. May also provide NSLayoutFormatOptions as a second parameter.
+    public func addConstraints(constraints: VisualFormatLanguage..., options: NSLayoutFormatOptions = []) {
+        addConstraints(constraints.reduce([]) { $0 + $1.constraints(options) })
     }
     
 }

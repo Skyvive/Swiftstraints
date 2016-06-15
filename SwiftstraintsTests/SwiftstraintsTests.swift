@@ -84,4 +84,17 @@ class SwiftstraintsTests: XCTestCase {
         }
     }
     
+    func testAddConstraints() {
+        let superview = UIView()
+        let topView = UIView()
+        let bottomView = UIView()
+        superview.addSubview(topView)
+        superview.addSubview(bottomView)
+        superview.addConstraints("V:|[\(topView)][\(bottomView)]|")
+        superview.addConstraints("H:|[\(topView)]|",
+                                 "H:|[\(bottomView)]|")
+        superview.addConstraints(topView.heightAnchor == superview.heightAnchor / 2,
+                                 bottomView.heightAnchor == topView.heightAnchor)
+    }
+    
 }
