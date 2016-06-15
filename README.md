@@ -103,6 +103,7 @@ superview.addConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 Super easy, super simple.
 ## Revision History
 
+* 2.2.0 - Added support for UILayoutPriority
 * 2.1.0 - Fixed a view reference bug and added a new convenience method for adding constraints
 * 2.0.2 - Added support for tvOS target.
 * 2.0.1 - Updated to include support for axis anchors, increased test coverage and more documentation.
