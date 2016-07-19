@@ -8,62 +8,62 @@
 
 import Foundation
 
-extension NSObject {
-    
-    var vflKey: String {
-        return "A\(UInt(bitPattern: unsafeAddressOf(self).hashValue))B"
-    }
-    
+private func vflKey(object: AnyObject) -> String {
+    return "A\(UInt(bitPattern: unsafeAddressOf(object).hashValue))B"
 }
 
-func + <Key, Value>(lh: [Key : Value], rh: [Key : Value]) -> [Key : Value] {
-    var dictionary = lh
-    for (key, value) in rh {
-        dictionary[key] = value
+extension NSHashTable {
+    
+    private func addObjects(objects: [AnyObject]) {
+        for object in objects {
+            addObject(object)
+        }
     }
-    return dictionary
+    
+    var vflDictionary: [String : AnyObject] {
+        var dictionary = [String : AnyObject]()
+        for object in allObjects {
+            dictionary[vflKey(object)] = object
+        }
+        return dictionary
+    }
+    
 }
 
 /// Represents constraints created from a interpolated string in the visual format language.
 public struct VisualFormatLanguage : StringInterpolationConvertible {
     
     let format: String
-    var metrics = [String : NSNumber]()
-    var views = [String : UIView]()
+    var metrics = NSHashTable(options: NSPointerFunctionsOptions.WeakMemory)
+    var views = NSHashTable(options: NSPointerFunctionsOptions.WeakMemory)
     
     public init(stringInterpolation strings: VisualFormatLanguage...) {
         var format = ""
-        var metrics = [String : NSNumber]()
-        var views = [String : UIView]()
         for vfl in strings {
             format.appendContentsOf(vfl.format)
-            for (key, value) in vfl.metrics {
-                metrics[key] = value
-            }
-            for (key, value) in vfl.views {
-                views[key] = value
-            }
+            metrics.addObjects(vfl.metrics.allObjects)
+            views.addObjects(vfl.views.allObjects)
         }
         self.format = format
-        self.metrics = metrics
-        self.views = views
     }
     
     public init<T>(stringInterpolationSegment expr: T) {
-        if let view = expr as? UIView {
-            format = view.vflKey
-            views[format] = view
-        } else if let number = expr as? NSNumber {
-            format = number.vflKey
-            metrics[format] = number
-        } else {
-            format = String(expr)
-        }
+        format = String(expr)
+    }
+    
+    public init(stringInterpolationSegment view: UIView) {
+        format = vflKey(view)
+        views.addObject(view)
+    }
+    
+    public init(stringInterpolationSegment number: NSNumber) {
+        format = vflKey(number)
+        metrics.addObject(number)
     }
     
     /// Returns layout constraints with options.
     public func constraints(options: NSLayoutFormatOptions) -> [NSLayoutConstraint] {
-        return NSLayoutConstraint.constraintsWithVisualFormat(format, options: options, metrics: metrics, views: views)
+        return NSLayoutConstraint.constraintsWithVisualFormat(format, options: options, metrics: metrics.vflDictionary, views: views.vflDictionary)
     }
     
     /// Returns layout constraints.
