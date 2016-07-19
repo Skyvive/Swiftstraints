@@ -32,8 +32,21 @@ public struct VisualFormatLanguage : StringInterpolationConvertible {
     var views = [String : UIView]()
     
     public init(stringInterpolation strings: VisualFormatLanguage...) {
-        format = strings.reduce("") { return $0.0 + $0.1.format }
-        views = strings.reduce([:]) { return $0.0 + $0.1.views }
+        var format = ""
+        var metrics = [String : NSNumber]()
+        var views = [String : UIView]()
+        for vfl in strings {
+            format.appendContentsOf(vfl.format)
+            for (key, value) in vfl.metrics {
+                metrics[key] = value
+            }
+            for (key, value) in vfl.views {
+                views[key] = value
+            }
+        }
+        self.format = format
+        self.metrics = metrics
+        self.views = views
     }
     
     public init<T>(stringInterpolationSegment expr: T) {
@@ -44,7 +57,7 @@ public struct VisualFormatLanguage : StringInterpolationConvertible {
             format = number.vflKey
             metrics[format] = number
         } else {
-            format = "\(expr)"
+            format = String(expr)
         }
     }
     
