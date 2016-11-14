@@ -8,7 +8,7 @@
 
 extension NSLayoutConstraint {
     
-    func priority(priority: LayoutPriority) -> Self {
+    func priority(_ priority: LayoutPriority) -> Self {
         self.priority = priority.priority
         return self
     }

@@ -9,60 +9,64 @@
 import Foundation
 
 public protocol AxisAnchor {
-    var anchor: NSLayoutAnchor { get }
+    associatedtype AnchorType : AnyObject
+    var anchor: NSLayoutAnchor<AnchorType> { get }
     var constant: CGFloat { get }
     var priority: LayoutPriority { get }
 }
 
-struct CompoundAxis : AxisAnchor {
-    let anchor: NSLayoutAnchor
-    let constant: CGFloat
-    let priority: LayoutPriority
+public struct CompoundAxis<AnchorType : AnyObject> : AxisAnchor {
+    public let anchor: NSLayoutAnchor<AnchorType>
+    public let constant: CGFloat
+    public let priority: LayoutPriority
 }
 
 extension AxisAnchor {
     
-    func add(addend: CGFloat) -> CompoundAxis {
+    func add(_ addend: CGFloat) -> CompoundAxis<AnchorType> {
         return CompoundAxis(anchor: anchor, constant: constant + addend, priority: priority)
     }
     
 }
 
-extension AxisAnchor where Self : NSLayoutAnchor {
-    public var anchor: NSLayoutAnchor { return self }
+extension NSLayoutXAxisAnchor : AxisAnchor {
+    public var anchor: NSLayoutAnchor<NSLayoutXAxisAnchor> { return self }
     public var constant: CGFloat { return 0 }
-    public var priority: LayoutPriority { return .Required }
+    public var priority: LayoutPriority { return .required }
 }
 
-extension NSLayoutXAxisAnchor : AxisAnchor {}
-extension NSLayoutYAxisAnchor : AxisAnchor {}
+extension NSLayoutYAxisAnchor : AxisAnchor {
+    public var anchor: NSLayoutAnchor<NSLayoutYAxisAnchor> { return self }
+    public var constant: CGFloat { return 0 }
+    public var priority: LayoutPriority { return .required }
+}
 
 /// Create a layout constraint from an inequality comparing two axis anchors.
-public func <=(lhs: AxisAnchor, rhs: AxisAnchor) -> NSLayoutConstraint {
-    return lhs.anchor.constraintLessThanOrEqualToAnchor(rhs.anchor, constant: rhs.constant - lhs.constant).priority(rhs.priority)
+public func <=<T : AxisAnchor, U : AxisAnchor>(lhs: T, rhs: U) -> NSLayoutConstraint where T.AnchorType == U.AnchorType {
+    return lhs.anchor.constraint(lessThanOrEqualTo: rhs.anchor, constant: rhs.constant - lhs.constant).priority(rhs.priority)
 }
 
 /// Create a layout constraint from an equation comparing two axis anchors.
-public func ==(lhs: AxisAnchor, rhs: AxisAnchor) -> NSLayoutConstraint {
-    return lhs.anchor.constraintEqualToAnchor(rhs.anchor, constant: rhs.constant - lhs.constant).priority(rhs.priority)
+public func ==<T : AxisAnchor, U : AxisAnchor>(lhs: T, rhs: U) -> NSLayoutConstraint where T.AnchorType == U.AnchorType {
+    return lhs.anchor.constraint(equalTo: rhs.anchor, constant: rhs.constant - lhs.constant).priority(rhs.priority)
 }
 
 /// Create a layout constraint from an inequality comparing two axis anchors.
-public func >=(lhs: AxisAnchor, rhs: AxisAnchor) -> NSLayoutConstraint {
-    return lhs.anchor.constraintGreaterThanOrEqualToAnchor(rhs.anchor, constant: rhs.constant - lhs.constant).priority(rhs.priority)
+public func >=<T : AxisAnchor, U : AxisAnchor>(lhs: T, rhs: U) -> NSLayoutConstraint where T.AnchorType == U.AnchorType {
+    return lhs.anchor.constraint(greaterThanOrEqualTo: rhs.anchor, constant: rhs.constant - lhs.constant).priority(rhs.priority)
 }
 
 /// Add a constant to an axis anchor.
-public func +(axis: AxisAnchor, addend: CGFloat) -> AxisAnchor {
+public func +<T : AxisAnchor>(axis: T, addend: CGFloat) -> CompoundAxis<T.AnchorType> {
     return axis.add(addend)
 }
 
 /// Add a constant to an axis anchor.
-public func +(addend: CGFloat, axis: AxisAnchor) -> AxisAnchor {
+public func +<T : AxisAnchor>(addend: CGFloat, axis: T) -> CompoundAxis<T.AnchorType> {
     return axis.add(addend)
 }
 
 /// Subtract a constant from an axis anchor.
-public func -(axis: AxisAnchor, subtrahend: CGFloat) -> AxisAnchor {
+public func -<T : AxisAnchor>(axis: T, subtrahend: CGFloat) -> CompoundAxis<T.AnchorType> {
     return axis.add(-subtrahend)
 }

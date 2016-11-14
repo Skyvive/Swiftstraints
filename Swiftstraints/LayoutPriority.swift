@@ -8,25 +8,25 @@
 
 public enum LayoutPriority {
     
-    case Required
-    case High
-    case Low
-    case FittingSizeLevel
-    case Other(UILayoutPriority)
+    case required
+    case high
+    case low
+    case fittingSizeLevel
+    case other(UILayoutPriority)
     
     var priority: UILayoutPriority {
         switch self {
-        case .Required: return UILayoutPriorityRequired
-        case .High: return UILayoutPriorityDefaultHigh
-        case .Low: return UILayoutPriorityDefaultLow
-        case .FittingSizeLevel: return UILayoutPriorityFittingSizeLevel
-        case .Other(let priority): return priority
+        case .required: return UILayoutPriorityRequired
+        case .high: return UILayoutPriorityDefaultHigh
+        case .low: return UILayoutPriorityDefaultLow
+        case .fittingSizeLevel: return UILayoutPriorityFittingSizeLevel
+        case .other(let priority): return priority
         }
     }
     
 }
 
-public func |(lhs: AxisAnchor, rhs: LayoutPriority) -> AxisAnchor {
+public func |<T : AxisAnchor>(lhs: T, rhs: LayoutPriority) -> CompoundAxis<T.AnchorType> {
     return CompoundAxis(anchor: lhs.anchor, constant: lhs.constant, priority: rhs)
 }
 

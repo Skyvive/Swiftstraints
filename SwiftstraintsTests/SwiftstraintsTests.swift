@@ -33,11 +33,11 @@ class SwiftstraintsTests: XCTestCase {
     func testAxisConstraints() {
         let view1 = UIView()
         let view2 = UIView()
-        XCTAssert((view1.topAnchor == view2.bottomAnchor) == view1.topAnchor.constraintEqualToAnchor(view2.bottomAnchor))
-        XCTAssert((view1.topAnchor == view2.bottomAnchor + 10) == view1.topAnchor.constraintEqualToAnchor(view2.bottomAnchor, constant: 10))
-        XCTAssert((view1.topAnchor + 10 == view2.bottomAnchor) == view1.topAnchor.constraintEqualToAnchor(view2.bottomAnchor, constant: -10))
-        XCTAssert((view1.topAnchor <= view2.bottomAnchor) == view1.topAnchor.constraintLessThanOrEqualToAnchor(view2.bottomAnchor))
-        XCTAssert((view1.topAnchor >= view2.bottomAnchor) == view1.topAnchor.constraintGreaterThanOrEqualToAnchor(view2.bottomAnchor))
+        XCTAssert((view1.topAnchor == view2.bottomAnchor) == view1.topAnchor.constraint(equalTo: view2.bottomAnchor))
+        XCTAssert((view1.topAnchor == view2.bottomAnchor + 10) == view1.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: 10))
+        XCTAssert((view1.topAnchor + 10 == view2.bottomAnchor) == view1.topAnchor.constraint(equalTo: view2.bottomAnchor, constant: -10))
+        XCTAssert((view1.topAnchor <= view2.bottomAnchor) == view1.topAnchor.constraint(lessThanOrEqualTo: view2.bottomAnchor))
+        XCTAssert((view1.topAnchor >= view2.bottomAnchor) == view1.topAnchor.constraint(greaterThanOrEqualTo: view2.bottomAnchor))
     }
     
     func testDimensionExpressions() {
@@ -55,28 +55,28 @@ class SwiftstraintsTests: XCTestCase {
     
     func testDimensionConstraints() {
         let view = UIView()
-        XCTAssert((view.widthAnchor == 10) == view.widthAnchor.constraintEqualToConstant(10))
-        XCTAssert((view.widthAnchor == view.heightAnchor) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor))
-        XCTAssert((view.widthAnchor == view.heightAnchor + 10) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor, constant: 10))
-        XCTAssert((view.widthAnchor == view.heightAnchor*10) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor, multiplier: 10))
-        XCTAssert((view.widthAnchor == view.heightAnchor*10 + 10) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor, multiplier: 10, constant: 10))
-        XCTAssert((view.widthAnchor*2 == view.heightAnchor*4) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor, multiplier: 2))
-        XCTAssert((view.widthAnchor*2 == view.heightAnchor*2 + 2) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor, constant: 1))
-        XCTAssert((view.widthAnchor*3 + 1 <= view.heightAnchor*6 + 7) == view.widthAnchor.constraintLessThanOrEqualToAnchor(view.heightAnchor, multiplier: 2, constant: 2))
-        XCTAssert((view.widthAnchor*3 + 1 == view.heightAnchor*6 + 7) == view.widthAnchor.constraintEqualToAnchor(view.heightAnchor, multiplier: 2, constant: 2))
-        XCTAssert((view.widthAnchor*3 + 1 >= view.heightAnchor*6 + 7) == view.widthAnchor.constraintGreaterThanOrEqualToAnchor(view.heightAnchor, multiplier: 2, constant: 2))
+        XCTAssert((view.widthAnchor == 10) == view.widthAnchor.constraint(equalToConstant: 10))
+        XCTAssert((view.widthAnchor == view.heightAnchor) == view.widthAnchor.constraint(equalTo: view.heightAnchor))
+        XCTAssert((view.widthAnchor == view.heightAnchor + 10) == view.widthAnchor.constraint(equalTo: view.heightAnchor, constant: 10))
+        XCTAssert((view.widthAnchor == view.heightAnchor*10) == view.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 10))
+        XCTAssert((view.widthAnchor == view.heightAnchor*10 + 10) == view.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 10, constant: 10))
+        XCTAssert((view.widthAnchor*2 == view.heightAnchor*4) == view.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 2))
+        XCTAssert((view.widthAnchor*2 == view.heightAnchor*2 + 2) == view.widthAnchor.constraint(equalTo: view.heightAnchor, constant: 1))
+        XCTAssert((view.widthAnchor*3 + 1 <= view.heightAnchor*6 + 7) == view.widthAnchor.constraint(lessThanOrEqualTo: view.heightAnchor, multiplier: 2, constant: 2))
+        XCTAssert((view.widthAnchor*3 + 1 == view.heightAnchor*6 + 7) == view.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 2, constant: 2))
+        XCTAssert((view.widthAnchor*3 + 1 >= view.heightAnchor*6 + 7) == view.widthAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor, multiplier: 2, constant: 2))
     }
     
     func testPriority() {
         let view = UIView()
-        XCTAssert((view.widthAnchor == view.heightAnchor | .Required).priority == UILayoutPriorityRequired)
-        XCTAssert((view.widthAnchor == view.heightAnchor | .High).priority == UILayoutPriorityDefaultHigh)
-        XCTAssert((view.widthAnchor == view.heightAnchor | .Low).priority == UILayoutPriorityDefaultLow)
-        XCTAssert((view.widthAnchor == view.heightAnchor | .Other(0.18)).priority == 0.18)
-        XCTAssert((view.widthAnchor == view.heightAnchor + 10 | .Low).priority == UILayoutPriorityDefaultLow)
-        XCTAssert((view.widthAnchor == 10 | .Low).priority == UILayoutPriorityDefaultLow)
-        XCTAssert((view.topAnchor == view.bottomAnchor | .High).priority == UILayoutPriorityDefaultHigh)
-        XCTAssert((view.topAnchor == view.bottomAnchor + 10 | .Low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .required).priority == UILayoutPriorityRequired)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .high).priority == UILayoutPriorityDefaultHigh)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .other(0.18)).priority == 0.18)
+        XCTAssert((view.widthAnchor == view.heightAnchor + 10 | .low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.widthAnchor == 10 | .low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.topAnchor == view.bottomAnchor | .high).priority == UILayoutPriorityDefaultHigh)
+        XCTAssert((view.topAnchor == view.bottomAnchor + 10 | .low).priority == UILayoutPriorityDefaultLow)
     }
     
     func testVisualFormatLanguage() {
@@ -86,7 +86,7 @@ class SwiftstraintsTests: XCTestCase {
         superview.addSubview(leftView)
         superview.addSubview(rightView)
         let shorthandConstraints = NSLayoutConstraints("H:|-8-[\(leftView)(>=80,<=100)]-8-[\(rightView)]-8-|")
-        let normalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-8-[leftView(>=80,<=100)]-8-[rightView]-8-|",
+        let normalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[leftView(>=80,<=100)]-8-[rightView]-8-|",
             options: [],
             metrics: nil,
             views: ["leftView" : leftView, "rightView" : rightView])
