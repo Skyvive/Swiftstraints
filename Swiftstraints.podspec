@@ -9,8 +9,8 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = { "Brad Hilton" => "brad.hilton.nw@gmail.com" }
   s.source       = { :git => "https://github.com/Skyvive/Swiftstraints.git", :tag => "3.0.0" }
-  s.ios.deployment_target = "9.0"
-  s.tvos.deployment_target = "9.0"
+  s.ios.deployment_target = "8.0"
+  s.tvos.deployment_target = "8.0"
   s.source_files  = "Swiftstraints", "Swiftstraints/**/*.{swift,h,m}"
   s.requires_arc = true
 end
