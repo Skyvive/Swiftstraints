@@ -24,10 +24,10 @@ class SwiftstraintsTests: XCTestCase {
     
     func testAxisExpressions() {
         let view = UIView()
-        XCTAssert(view.topAnchor.constant == 0)
         XCTAssert((view.topAnchor + 10).constant == 10)
         XCTAssert((10 + view.topAnchor).constant == 10)
         XCTAssert((view.topAnchor - 10).constant == -10)
+        XCTAssert(view.topAnchor.constant == 0)
     }
     
     func testAxisConstraints() {
