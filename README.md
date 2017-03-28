@@ -103,6 +103,7 @@ superview.addConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 Super easy, super simple.
 ## Revision History
 
+* 3.0.1 - Bug fixes and limited iOS 8 support (Thank you catjia1011)
 * 3.0.0 - Updated to Swift 3
 * 2.2.0 - Added support for UILayoutPriority
 * 2.1.0 - Fixed a view reference bug and added a new convenience method for adding constraints
