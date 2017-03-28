@@ -16,7 +16,7 @@ private func vflKey(_ object: AnyObject) -> String {
 public struct VisualFormatLanguage : ExpressibleByStringInterpolation {
     
     let format: String
-    var metrics = NSHashTable<NSNumber>(options: NSPointerFunctions.Options.copyIn)
+    var metrics = NSHashTable<NSNumber>(options: [.copyIn, .objectPointerPersonality])
     var views = NSHashTable<UIView>(options: NSPointerFunctions.Options.weakMemory)
     var viewCount: Int = 0  // used to check if this VFL is still valid; since views won't persist the view pointers, if the view is deallocated, there will be an exception when constraints are created later
     
