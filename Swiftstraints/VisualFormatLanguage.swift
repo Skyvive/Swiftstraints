@@ -25,11 +25,15 @@ public struct VisualFormatLanguage : ExpressibleByStringInterpolation {
         for vfl in strings {
             format.append(vfl.format)
             for metric in vfl.metrics.allObjects {
-                metrics.add(metric)
+                if !metrics.contains(metric) {
+                    metrics.add(metric)
+                }
             }
             for view in vfl.views.allObjects {
-                views.add(view)
-                viewCount += 1
+                if !views.contains(view) {
+                    views.add(view)
+                    viewCount += 1
+                }
             }
         }
         self.format = format
@@ -39,7 +43,6 @@ public struct VisualFormatLanguage : ExpressibleByStringInterpolation {
         if let view = expr as? UIView {
             format = vflKey(view)
             views.add(view)
-            viewCount += 1
         } else if let number = expr as? NSNumber {
             format = vflKey(number)
             metrics.add(number)
