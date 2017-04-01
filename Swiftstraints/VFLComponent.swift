@@ -137,15 +137,15 @@ public func -(lhs: VFLComponent, rhs: VFLComponent) -> VFLComponent {
 }
 
 /// used for UILayoutPriority
-public func .~(dimension: VFLComponent, priority: UILayoutPriority) -> VFLComponent {
+public func .~(dimension: VFLComponent, priority: LayoutPriority) -> VFLComponent {
     var result = dimension
     if dimension.isWrapped {
         var format = dimension.format
         format.remove(at: format.startIndex)
         format.remove(at: format.index(format.endIndex, offsetBy: -1))
-        result.format = "(\(format)@\(String(priority)))"
+        result.format = "(\(format)@\(String(priority.priority)))"
     } else {
-        result.format = dimension.format + "@" + String(priority)
+        result.format = dimension.format + "@" + String(priority.priority)
     }
     return result
 }
@@ -153,8 +153,8 @@ public func .~(dimension: VFLComponent, priority: UILayoutPriority) -> VFLCompon
 
 /// usages:
 /// let constraints = NSLayoutConstraints(H:|-[view1]-(>=5)-[view2]-3-|)
-/// NSLayoutConstraints(H:|-30-[versionLabel:==3.~999]-10-[logoView:>=5]-30-|)
-/// NSLayoutConstraints(V:|-30-[versionLabel:20]-10-[logoView]-(30.~(UILayoutPriorityRequired - 1))-|)
+/// NSLayoutConstraints(H:|-30-[versionLabel:==3.~(.high)]-10-[logoView:>=5]-30-|)
+/// NSLayoutConstraints(V:|-30-[versionLabel:20]-10-[logoView]-(30.~(.required - 1))-|)
 
 extension Array where Element: NSLayoutConstraint {
     public init(H: VFLComponent, options: NSLayoutFormatOptions = []) {
