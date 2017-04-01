@@ -138,7 +138,7 @@ public func .~(dimension: VFLComponent, priority: UILayoutPriority) -> VFLCompon
         var format = dimension.format
         format.remove(at: format.startIndex)
         format.remove(at: format.index(format.endIndex, offsetBy: -1))
-        result.format = "(\(dimension.format)@\(String(priority)))"
+        result.format = "(\(format)@\(String(priority)))"
     } else {
         result.format = dimension.format + "@" + String(priority)
     }
