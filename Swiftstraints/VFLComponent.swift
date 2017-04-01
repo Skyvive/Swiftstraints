@@ -12,23 +12,26 @@ private func vflKey(_ object: AnyObject) -> String {
     return "A\(UInt(bitPattern: Unmanaged.passUnretained(object).toOpaque().hashValue))B"
 }
 
-public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral, ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
+public struct VFLComponent {
     public var format = ""
-    
-    // ExpressibleByArrayLiteral
-    var viewDict = [String: UIView]()
+    var viewMap = NSMapTable<NSString, UIView>(keyOptions: .copyIn, valueOptions: .weakMemory)
+    var metricMap = NSMapTable<NSString, NSNumber>(keyOptions: .copyIn, valueOptions: [.copyIn, .objectPointerPersonality])
+}
+
+extension VFLComponent: ExpressibleByArrayLiteral {
     public typealias Element = UIView
     public init(arrayLiteral elements: Element...) {
         guard elements.count == 1 else {
             fatalError("view component can contains only one UIView instance: \(elements)")
         }
         let view = elements[0]
-        let key = vflKey(view)
-        viewDict[key] = view
+        let key = vflKey(view) as NSString
+        viewMap.setObject(view, forKey: key)
         self.format = "[\(key)]"
     }
-    
-    // ExpressibleByDictionaryLiteral
+}
+
+extension VFLComponent: ExpressibleByDictionaryLiteral {
     public typealias Key = UIView
     public typealias Value = VFLComponent
     public init(dictionaryLiteral elements: (Key, Value)...) {
@@ -37,40 +40,64 @@ public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByDictionaryLi
         }
         let view = elements[0].0
         let numbers = elements[0].1
-        let key = vflKey(view)
-        viewDict[key] = view
-        metricDict = numbers.metricDict
+        let key = vflKey(view) as NSString
+        viewMap.setObject(view, forKey: key)
+        metricMap = numbers.metricMap
         if numbers.isWrapped {
             self.format = "[\(key)\(numbers.format)]"
         } else {
             self.format = "[\(key)(\(numbers.format))]"
         }
     }
-    
-    // ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral
-    var metricDict = [String: NSNumber]()
+}
+
+extension VFLComponent: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
     public typealias FloatLiteralType = Double
     public init(floatLiteral value: FloatLiteralType) {
         let number = value as NSNumber
         let key = vflKey(number)
-        metricDict[key] = number
+        metricMap.setObject(number, forKey: key as NSString)
         self.format = key
     }
     public typealias IntegerLiteralType = Int
     public init(integerLiteral value: IntegerLiteralType) {
         let number = value as NSNumber
         let key = vflKey(number)
-        metricDict[vflKey(number)] = number
+        metricMap.setObject(number, forKey: key as NSString)
         self.format = key
     }
     
 }
 
-private extension VFLComponent {
-    var isWrapped: Bool {
+extension VFLComponent {
+    fileprivate var isWrapped: Bool {
         return self.format.hasPrefix("(") && self.format.hasSuffix(")")
     }
+
+    private func vflDictionary<T>(_ table: NSMapTable<NSString, T>) -> [String : AnyObject] {
+        var dictionary = [String : AnyObject]()
+        for key in table.keyEnumerator().allObjects {
+            let key = key as! NSString
+            dictionary[key as String] = table.object(forKey: key)
+        }
+        return dictionary
+    }
+
+    /// Returns layout constraints with options.
+    public func constraints(axis: UILayoutConstraintAxis, options: NSLayoutFormatOptions) -> [NSLayoutConstraint] {
+        /// fail it if views are changed in case of the weak pointers' targets being deallocated
+        let keyCount = viewMap.keyEnumerator().allObjects.count
+        guard let viewCount = viewMap.objectEnumerator()?.allObjects.count, keyCount == viewCount else { return [] }
+        let axisPrefix: String
+        switch axis {
+        case .horizontal: axisPrefix = "H:"
+        case .vertical:   axisPrefix = "V:"
+        }
+        return NSLayoutConstraint.constraints(withVisualFormat: axisPrefix + format, options: options, metrics: vflDictionary(metricMap), views: vflDictionary(viewMap))
+    }
+    
 }
+
 
 // MARK: - operators
 
@@ -127,11 +154,15 @@ public postfix func -|(x: VFLComponent) -> VFLComponent {
 public func -(lhs: VFLComponent, rhs: VFLComponent) -> VFLComponent {
     var result = lhs
     result.format = lhs.format + "-" + rhs.format
-    for (key, value) in rhs.viewDict {
-        result.viewDict.updateValue(value, forKey: key)
+    for key in rhs.viewMap.keyEnumerator().allObjects {
+        let key = key as! NSString
+        let view = rhs.viewMap.object(forKey: key)
+        result.viewMap.setObject(view, forKey: key)
     }
-    for (key, value) in rhs.metricDict {
-        result.metricDict.updateValue(value, forKey: key)
+    for key in rhs.metricMap.keyEnumerator().allObjects {
+        let key = key as! NSString
+        let number = rhs.metricMap.object(forKey: key)
+        result.metricMap.setObject(number, forKey: key)
     }
     return result
 }
@@ -158,9 +189,9 @@ public func .~(dimension: VFLComponent, priority: LayoutPriority) -> VFLComponen
 
 extension Array where Element: NSLayoutConstraint {
     public init(H: VFLComponent, options: NSLayoutFormatOptions = []) {
-        self = NSLayoutConstraint.constraints(withVisualFormat: "H:" + H.format, options: options, metrics: H.metricDict, views: H.viewDict) as! [Element]
+        self = H.constraints(axis: .horizontal, options: options) as! [Element]
     }
     public init(V: VFLComponent, options: NSLayoutFormatOptions = []) {
-        self = NSLayoutConstraint.constraints(withVisualFormat: "V:" + V.format, options: options, metrics: V.metricDict, views: V.viewDict) as! [Element]
+        self = V.constraints(axis: .vertical, options: options) as! [Element]
     }
 }
