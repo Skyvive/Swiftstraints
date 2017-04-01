@@ -111,8 +111,19 @@ class SwiftstraintsTests: XCTestCase {
             for (lh, rh) in zip(shorthandConstraints, normalConstraints) {
                 XCTAssert(lh == rh)
             }
-            }()
-
+        }()
+        
+        _ = {
+            let shorthandConstraints = NSLayoutConstraints(H:|-[view1]-(>=5)-[view2:==view1]-3-|)
+            let normalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[view1]-(>=5)-[view2(==view1)]-3-|",
+                                                                   options: [],
+                                                                   metrics: nil,
+                                                                   views: ["view1" : view1, "view2" : view2])
+            for (lh, rh) in zip(shorthandConstraints, normalConstraints) {
+                XCTAssert(lh == rh)
+            }
+        }()
+        
         _ = {
             let shorthandConstraints = NSLayoutConstraints(H:|-30-[view1:==3.~(.high)]-10-[view2:>=5]-30-|)
             let normalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[view1(==3@\(UILayoutPriorityDefaultHigh))]-10-[view2(>=5)]-30-|",

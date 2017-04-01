@@ -127,6 +127,22 @@ public prefix func <=(x: VFLComponent) -> VFLComponent {
     return x
 }
 
+public prefix func ==(view: UIView) -> VFLComponent {
+    var x = [view] as VFLComponent
+    x.format = "(==" + vflKey(view) + ")"
+    return x
+}
+public prefix func >=(view: UIView) -> VFLComponent {
+    var x = [view] as VFLComponent
+    x.format = "(>=" + vflKey(view) + ")"
+    return x
+}
+public prefix func <=(view: UIView) -> VFLComponent {
+    var x = [view] as VFLComponent
+    x.format = "(<=" + vflKey(view) + ")"
+    return x
+}
+
 
 /// used for superview
 public prefix func |(x: VFLComponent) -> VFLComponent {
