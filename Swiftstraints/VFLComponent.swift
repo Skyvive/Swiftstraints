@@ -12,18 +12,6 @@ private func vflKey(_ object: AnyObject) -> String {
     return "A\(UInt(bitPattern: Unmanaged.passUnretained(object).toOpaque().hashValue))B"
 }
 
-prefix operator ==
-prefix operator >=
-prefix operator <=
-
-prefix operator |
-prefix operator |-
-postfix operator |
-postfix operator -|
-
-// used for UILayoutPriority
-infix operator .~: MultiplicationPrecedence
-
 public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral, ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
     public var format = ""
     
@@ -85,6 +73,17 @@ private extension VFLComponent {
 }
 
 // MARK: - operators
+
+prefix operator ==
+prefix operator >=
+prefix operator <=
+prefix operator |
+prefix operator |-
+postfix operator |
+postfix operator -|
+infix operator .~: MultiplicationPrecedence
+
+/// used for dimensions
 public prefix func ==(x: VFLComponent) -> VFLComponent {
     var x = x
     x.format = "(==" + x.format + ")"
@@ -102,6 +101,7 @@ public prefix func <=(x: VFLComponent) -> VFLComponent {
 }
 
 
+/// used for superview
 public prefix func |(x: VFLComponent) -> VFLComponent {
     var x = x
     x.format = "|" + x.format
@@ -122,6 +122,8 @@ public postfix func -|(x: VFLComponent) -> VFLComponent {
     x.format = x.format + "-|"
     return x
 }
+
+/// used for connections
 public func -(lhs: VFLComponent, rhs: VFLComponent) -> VFLComponent {
     var result = lhs
     result.format = lhs.format + "-" + rhs.format
@@ -133,6 +135,8 @@ public func -(lhs: VFLComponent, rhs: VFLComponent) -> VFLComponent {
     }
     return result
 }
+
+/// used for UILayoutPriority
 public func .~(dimension: VFLComponent, priority: UILayoutPriority) -> VFLComponent {
     var result = dimension
     if dimension.isWrapped {
@@ -149,8 +153,8 @@ public func .~(dimension: VFLComponent, priority: UILayoutPriority) -> VFLCompon
 
 /// usages:
 /// let constraints = NSLayoutConstraints(H:|-[view1]-(>=5)-[view2]-3-|)
-/// NSLayoutConstraints(H:|-30-[versionLabel:==3.~999]-10-[logoView]-30-|)
-/// NSLayoutConstraints(H:|-30-[versionLabel]-10-[logoView]-(30.~(UILayoutPriorityRequired - 1))-|)
+/// NSLayoutConstraints(H:|-30-[versionLabel:==3.~999]-10-[logoView:>=5]-30-|)
+/// NSLayoutConstraints(V:|-30-[versionLabel:20]-10-[logoView]-(30.~(UILayoutPriorityRequired - 1))-|)
 
 extension Array where Element: NSLayoutConstraint {
     public init(H: VFLComponent, options: NSLayoutFormatOptions = []) {
