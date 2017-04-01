@@ -51,6 +51,7 @@ public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByDictionaryLi
         let numbers = elements[0].1
         let key = vflKey(view)
         viewDict[key] = view
+        metricDict = numbers.metricDict
         if numbers.isWrapped {
             self.format = "[\(key)\(numbers.format)]"
         } else {
