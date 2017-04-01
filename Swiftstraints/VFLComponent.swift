@@ -21,10 +21,14 @@ prefix operator |-
 postfix operator |
 postfix operator -|
 
-public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
+// used for UILayoutPriority
+infix operator .~: MultiplicationPrecedence
+
+public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral, ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
     public var format = ""
-    var viewDict = [String: UIView]()
     
+    // ExpressibleByArrayLiteral
+    var viewDict = [String: UIView]()
     public typealias Element = UIView
     public init(arrayLiteral elements: Element...) {
         guard elements.count == 1 else {
@@ -35,7 +39,26 @@ public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByFloatLiteral
         viewDict[key] = view
         self.format = "[\(key)]"
     }
-
+    
+    // ExpressibleByDictionaryLiteral
+    public typealias Key = UIView
+    public typealias Value = VFLComponent
+    public init(dictionaryLiteral elements: (Key, Value)...) {
+        guard elements.count == 1 else {
+            fatalError("view component can contains only one UIView instance: \(elements)")
+        }
+        let view = elements[0].0
+        let numbers = elements[0].1
+        let key = vflKey(view)
+        viewDict[key] = view
+        if numbers.isWrapped {
+            self.format = "[\(key)\(numbers.format)]"
+        } else {
+            self.format = "[\(key)(\(numbers.format))]"
+        }
+    }
+    
+    // ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral
     var metricDict = [String: NSNumber]()
     public typealias FloatLiteralType = Double
     public init(floatLiteral value: FloatLiteralType) {
@@ -51,7 +74,13 @@ public struct VFLComponent: ExpressibleByArrayLiteral, ExpressibleByFloatLiteral
         metricDict[vflKey(number)] = number
         self.format = key
     }
+    
+}
 
+private extension VFLComponent {
+    var isWrapped: Bool {
+        return self.format.hasPrefix("(") && self.format.hasSuffix(")")
+    }
 }
 
 // MARK: - operators
@@ -103,8 +132,25 @@ public func -(lhs: VFLComponent, rhs: VFLComponent) -> VFLComponent {
     }
     return result
 }
+public func .~(dimension: VFLComponent, priority: UILayoutPriority) -> VFLComponent {
+    var result = dimension
+    if dimension.isWrapped {
+        var format = dimension.format
+        format.remove(at: format.startIndex)
+        format.remove(at: format.index(format.endIndex, offsetBy: -1))
+        result.format = "(\(dimension.format)@\(String(priority)))"
+    } else {
+        result.format = dimension.format + "@" + String(priority)
+    }
+    return result
+}
 
-/// usage: let constraints = NSLayoutConstraints(H:|-[view1]-(>=5)-[view2]-3-|)
+
+/// usages:
+/// let constraints = NSLayoutConstraints(H:|-[view1]-(>=5)-[view2]-3-|)
+/// NSLayoutConstraints(H:|-30-[versionLabel:==3.~999]-10-[logoView]-30-|)
+/// NSLayoutConstraints(H:|-30-[versionLabel]-10-[logoView]-(30.~(UILayoutPriorityRequired - 1))-|)
+
 extension Array where Element: NSLayoutConstraint {
     public init(H: VFLComponent, options: NSLayoutFormatOptions = []) {
         self = NSLayoutConstraint.constraints(withVisualFormat: "H:" + H.format, options: options, metrics: H.metricDict, views: H.viewDict) as! [Element]
