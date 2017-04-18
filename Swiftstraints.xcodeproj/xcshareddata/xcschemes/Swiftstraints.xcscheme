@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0810"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,20 +17,6 @@
                BlueprintIdentifier = "A2611A6F1B01B2980032CB53"
                BuildableName = "Swiftstraints.framework"
                BlueprintName = "Swiftstraints"
-               ReferencedContainer = "container:Swiftstraints.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A2611A7A1B01B2980032CB53"
-               BuildableName = "SwiftstraintsTests.xctest"
-               BlueprintName = "SwiftstraintsTests"
                ReferencedContainer = "container:Swiftstraints.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
