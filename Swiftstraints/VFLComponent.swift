@@ -190,9 +190,9 @@ public func .~(dimension: VFLComponent, priority: LayoutPriority) -> VFLComponen
         var format = dimension.format
         format.remove(at: format.startIndex)
         format.remove(at: format.index(format.endIndex, offsetBy: -1))
-        result.format = "(\(format)@\(String(priority.priority)))"
+        result.format = "(\(format)@\(String(describing: priority.priority)))"
     } else {
-        result.format = dimension.format + "@" + String(priority.priority)
+        result.format = dimension.format + "@" + String(describing: priority.priority)
     }
     return result
 }

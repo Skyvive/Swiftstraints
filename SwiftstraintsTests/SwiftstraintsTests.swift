@@ -69,14 +69,14 @@ class SwiftstraintsTests: XCTestCase {
     
     func testPriority() {
         let view = UIView()
-        XCTAssert((view.widthAnchor == view.heightAnchor | .required).priority == UILayoutPriorityRequired)
-        XCTAssert((view.widthAnchor == view.heightAnchor | .high).priority == UILayoutPriorityDefaultHigh)
-        XCTAssert((view.widthAnchor == view.heightAnchor | .low).priority == UILayoutPriorityDefaultLow)
-        XCTAssert((view.widthAnchor == view.heightAnchor | .other(0.18)).priority == 0.18)
-        XCTAssert((view.widthAnchor == view.heightAnchor + 10 | .low).priority == UILayoutPriorityDefaultLow)
-        XCTAssert((view.widthAnchor == 10 | .low).priority == UILayoutPriorityDefaultLow)
-        XCTAssert((view.topAnchor == view.bottomAnchor | .high).priority == UILayoutPriorityDefaultHigh)
-        XCTAssert((view.topAnchor == view.bottomAnchor + 10 | .low).priority == UILayoutPriorityDefaultLow)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .required).priority == UILayoutPriority.required)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .high).priority == UILayoutPriority.defaultHigh)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .low).priority == UILayoutPriority.defaultLow)
+        XCTAssert((view.widthAnchor == view.heightAnchor | .other(UILayoutPriority(rawValue: 0.18))).priority.rawValue == 0.18)
+        XCTAssert((view.widthAnchor == view.heightAnchor + 10 | .low).priority == UILayoutPriority.defaultLow)
+        XCTAssert((view.widthAnchor == 10 | .low).priority == UILayoutPriority.defaultLow)
+        XCTAssert((view.topAnchor == view.bottomAnchor | .high).priority == UILayoutPriority.defaultHigh)
+        XCTAssert((view.topAnchor == view.bottomAnchor + 10 | .low).priority == UILayoutPriority.defaultLow)
     }
     
     func testVisualFormatLanguage() {
@@ -116,28 +116,6 @@ class SwiftstraintsTests: XCTestCase {
         _ = {
             let shorthandConstraints = NSLayoutConstraints(H:|-[view1]-(>=5)-[view2:==view1]-3-|)
             let normalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[view1]-(>=5)-[view2(==view1)]-3-|",
-                                                                   options: [],
-                                                                   metrics: nil,
-                                                                   views: ["view1" : view1, "view2" : view2])
-            for (lh, rh) in zip(shorthandConstraints, normalConstraints) {
-                XCTAssert(lh == rh)
-            }
-        }()
-        
-        _ = {
-            let shorthandConstraints = NSLayoutConstraints(H:|-30-[view1:==3.~(.high)]-10-[view2:>=5]-30-|)
-            let normalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[view1(==3@\(UILayoutPriorityDefaultHigh))]-10-[view2(>=5)]-30-|",
-                                                                   options: [],
-                                                                   metrics: nil,
-                                                                   views: ["view1" : view1, "view2" : view2])
-            for (lh, rh) in zip(shorthandConstraints, normalConstraints) {
-                XCTAssert(lh == rh)
-            }
-        }()
-        
-        _ = {
-            let shorthandConstraints = NSLayoutConstraints(V:|[view1:20]-10-[view2]-(30.~(.required - 1))-|)
-            let normalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view1(20)]-10-[view2]-(30@\(UILayoutPriorityRequired - 1))-|",
                                                                    options: [],
                                                                    metrics: nil,
                                                                    views: ["view1" : view1, "view2" : view2])
