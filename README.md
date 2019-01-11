@@ -1,5 +1,13 @@
 # Swiftstraints
 
+<p align="left">
+<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
+  <img src="https://img.shields.io/badge/platform-tvOS-blue.svg?style=flat" alt="Platform tvOS" />
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift4-compatible-4BC51D.svg?style=flat" alt="Swift 4 compatible" /></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
+<a href="https://cocoapods.org/pods/Swiftstraints"><img src="https://img.shields.io/cocoapods/v/Swiftstraints.svg" alt="CocoaPods compatible" /></a>
+</p>
+
 `Swiftstraints` can turn verbose auto-layout code:
 ```swift
 let constraint = NSLayoutConstraint(item: blueView,
@@ -29,16 +37,30 @@ That was easy!
 
 ## Installation
 
-`Swiftstraints` is available through [CocoaPods](http://cocoapods.org). To install, simply include the following lines in your podfile:
+#### CocoaPods
+
+[CocoaPods](https://cocoapods.org/) is a dependency manager for Cocoa projects.
+
+Specify Swiftstraints into your project's `Podfile`:
+
 ```ruby
 use_frameworks!
 pod 'Swiftstraints'
 ```
-Be sure to import the module at the top of your .swift files:
-```swift
-import Swiftstraints
+
+#### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a simple, decentralized dependency manager for Cocoa.
+
+Specify Swiftstraints into your project's `Cartfile`:
+
+```ogdl
+github "Skyvive/Swiftstraints" ~> 4.2
 ```
-Alternatively, clone this repo or download it as a zip and include the classes in your project.
+
+#### Alternatively
+
+Clone this repo or download it as a zip and include the classes in your project.
 
 ## Constraints
 
@@ -103,6 +125,8 @@ superview.addConstraints("H:|[\(leftView)]-10-[\(rightView)]|")
 Super easy, super simple.
 ## Revision History
 
+* 4.2.0 - Updated to Swift 4.2
+* 4.0.0 - Updated to Swift 4
 * 3.0.1 - Bug fixes and limited iOS 8 support (Thank you catjia1011)
 * 3.0.0 - Updated to Swift 3
 * 2.2.0 - Added support for UILayoutPriority
