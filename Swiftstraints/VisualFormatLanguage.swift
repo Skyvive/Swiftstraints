@@ -60,7 +60,7 @@ public struct VisualFormatLanguage : ExpressibleByStringInterpolation {
     }
     
     /// Returns layout constraints with options.
-    public func constraints(_ options: NSLayoutFormatOptions) -> [NSLayoutConstraint] {
+    public func constraints(_ options: NSLayoutConstraint.FormatOptions) -> [NSLayoutConstraint] {
         /// fail it if views are changed in case of the weak pointers' targets being deallocated
         guard views.count == viewCount else { return [] }
         return NSLayoutConstraint.constraints(withVisualFormat: format, options: options, metrics: vflDictionary(metrics), views: vflDictionary(views))
@@ -79,7 +79,7 @@ extension Array where Element : NSLayoutConstraint {
     
     /// Create a list of constraints using a string interpolated with nested views and metrics.
     /// You can optionally include NSLayoutFormatOptions as the second parameter.
-    public init(_ visualFormatLanguage: VisualFormatLanguage, options: NSLayoutFormatOptions = []) {
+    public init(_ visualFormatLanguage: VisualFormatLanguage, options: NSLayoutConstraint.FormatOptions = []) {
         if let constraints = visualFormatLanguage.constraints(options) as? [Element] {
             self = constraints
         } else {
