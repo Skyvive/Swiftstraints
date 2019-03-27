@@ -92,6 +92,8 @@ extension VFLComponent {
         switch axis {
         case .horizontal: axisPrefix = "H:"
         case .vertical:   axisPrefix = "V:"
+        @unknown default:
+            fatalError("Unexpected axis: \(axis)")
         }
         return NSLayoutConstraint.constraints(withVisualFormat: axisPrefix + format, options: options, metrics: vflDictionary(metricMap), views: vflDictionary(viewMap))
     }
