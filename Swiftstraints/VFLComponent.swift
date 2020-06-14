@@ -205,11 +205,11 @@ public func .~(dimension: VFLComponent, priority: LayoutPriority) -> VFLComponen
 /// NSLayoutConstraints(H:|-30-[versionLabel:==3.~(.high)]-10-[logoView:>=5]-30-|)
 /// NSLayoutConstraints(V:|-30-[versionLabel:20]-10-[logoView]-(30.~(.required - 1))-|)
 
-extension Array where Element: NSLayoutConstraint {
+extension Array where Element == NSLayoutConstraint {
     public init(H: VFLComponent, options: NSLayoutConstraint.FormatOptions = []) {
-        self = H.constraints(axis: .horizontal, options: options) as! [Element]
+        self = H.constraints(axis: .horizontal, options: options)
     }
     public init(V: VFLComponent, options: NSLayoutConstraint.FormatOptions = []) {
-        self = V.constraints(axis: .vertical, options: options) as! [Element]
+        self = V.constraints(axis: .vertical, options: options)
     }
 }
