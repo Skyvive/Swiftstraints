@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @available(iOS 9.0, *)
 public protocol DimensionAnchor {

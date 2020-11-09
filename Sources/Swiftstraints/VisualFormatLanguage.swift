@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 private func vflKey(_ object: AnyObject) -> String {
     return "A\(UInt(bitPattern: Unmanaged.passUnretained(object).toOpaque().hashValue))B"
