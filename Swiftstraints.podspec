@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Swiftstraints"
-  s.version      = "5.0.0"
+  s.version      = "5.1.0"
   s.summary      = "Auto Layout Made Easy"
   s.description  = <<-DESC
                     Write auto layout constraints in a single line of code.

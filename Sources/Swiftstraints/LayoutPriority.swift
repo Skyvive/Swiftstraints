@@ -6,6 +6,8 @@
 //  Copyright © 2016 Skyvive. All rights reserved.
 //
 
+import UIKit
+
 public enum LayoutPriority {
     
     case required
