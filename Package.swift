@@ -22,9 +22,7 @@ let package = Package(
         .target(
             name: "Swiftstraints",
             dependencies: [],
-            path: "Sources",
-            exclude: ["Info.plist"]
-),
+            path: "Sources"),
         .testTarget(
             name: "SwiftstraintsTests",
             dependencies: ["Swiftstraints"],
