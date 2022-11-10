@@ -65,6 +65,30 @@ public func >=<T : AxisAnchor, U : AxisAnchor>(lhs: T, rhs: U) -> NSLayoutConstr
     return lhs.anchor.constraint(greaterThanOrEqualTo: rhs.anchor, constant: rhs.constant - lhs.constant).priority(rhs.priority)
 }
 
+/// Create a layout constraint from an inequality comparing two axis anchors and activate it.
+@available(iOS 9.0, *)
+public func <=!<T : AxisAnchor, U : AxisAnchor>(lhs: T, rhs: U) -> NSLayoutConstraint where T.AnchorType == U.AnchorType {
+    let constraint = lhs <= rhs
+    constraint.isActive = true
+    return constraint
+}
+
+/// Create a layout constraint from an equation comparing two axis anchors and activate it.
+@available(iOS 9.0, *)
+public func ==!<T : AxisAnchor, U : AxisAnchor>(lhs: T, rhs: U) -> NSLayoutConstraint where T.AnchorType == U.AnchorType {
+    let constraint = lhs == rhs
+    constraint.isActive = true
+    return constraint
+}
+
+/// Create a layout constraint from an inequality comparing two axis anchors and activate it.
+@available(iOS 9.0, *)
+public func >=!<T : AxisAnchor, U : AxisAnchor>(lhs: T, rhs: U) -> NSLayoutConstraint where T.AnchorType == U.AnchorType {
+    let constraint = lhs >= rhs
+    constraint.isActive = true
+    return constraint
+}
+
 /// Add a constant to an axis anchor.
 @available(iOS 9.0, *)
 public func +<T : AxisAnchor>(axis: T, addend: CGFloat) -> CompoundAxis<T.AnchorType> {
